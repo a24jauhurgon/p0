@@ -48,37 +48,44 @@ function renderJuego(data) {
         htmlString+=`<img src="${data.preguntes[i].imatge}" alt="imatge pregunta ${i+1}"> <br>`;
 
         for (let j=0; j < data.preguntes[i].respostes.length ; j++){
-                htmlString+=`<button class="btn btn-primary" onclick="marcarRespuesta(${i},${j})"> 
+                htmlString+=`<button preg="${i}" resp="${j}" class="btn btn-primary" "> 
                                 ${data.preguntes[i].respostes[j]} 
                             </button> `;
         }
     }
 
-    htmlString+=`<button id="btnEnviar" onclick="enviarEstat()" class="btn btn-danger"  style="display:none" >Enviar Respuestas</button>`
+    contenidor.addEventListener("click", function(e) {
+        console.log("Han clickado a " + e.target);
+        if(e.target.classList.contains("btn")) {
+            console.log("Han clickado a un boton que tiene los datos" + e.target.getAttribute("preg") + "--" + e.target.getAttribute("resp"))
+            marcarRespuesta(e.target.getAttribute("preg"), e.target.getAttribute("resp"))
+        }
+    });
+
+    htmlString+=`<button id="btnEnviar" class="btn btn-danger"  style="display:none" >Enviar Respuestas</button>`
             
     contenidor.innerHTML=htmlString;
+
+    document.getElementById("btnEnviar").addEventListener("click", function() {
+        const url = "recollida.php"; // cambia por tu endpoint
+
+        // 2) Enviar como FormData (simulando formulario multipart)
+        let formData = new FormData();
+        formData.append("contadorPreguntes", estatDeLaPartida.contadorPreguntes);
+        formData.append("respostesUsuari", JSON.stringify(estatDeLaPartida.respostesUsuari));
+
+        fetch(url, {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.text())
+        .then(data => console.log("FormData ->", data));
+    })
 }
 
-window.addEventListener("DOMContentLoaded", (event) => {
+globalThis.addEventListener("DOMContentLoaded", (event) => {
 
     fetch('js/data.json')
-        .then(response => response.json())
-        .then(preg => renderJuego(preg));
+    .then(response => response.json())
+    .then(preg => renderJuego(preg));
 });
-
-function enviarEstat() {
-  const url = "recollida.php"; // cambia por tu endpoint
-
-  // 2) Enviar como FormData (simulando formulario multipart)
-  let formData = new FormData();
-  formData.append("contadorPreguntes", estatDeLaPartida.contadorPreguntes);
-  formData.append("respostesUsuari", JSON.stringify(estatDeLaPartida.respostesUsuari));
-
-  fetch(url, {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.text())
-  .then(data => console.log("FormData ->", data));
-
-}
