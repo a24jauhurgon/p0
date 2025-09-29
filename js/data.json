@@ -9,7 +9,7 @@
         "Prohibit girar a l’esquerra"
       ],
       "resposta_correcta": 0,
-      "imatge": "https://upload.wikimedia.org/wikipedia/commons/0/01/Spain_traffic_signal_r308.svg"
+      "imatge": "../img/1.svg"
     },
     {
       "id": 2,
@@ -20,7 +20,7 @@
         "Perill de corba perillosa"
       ],
       "resposta_correcta": 1,
-      "imatge": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Spain_traffic_signal_p21.svg"
+      "imatge": "../img/2.svg"
     },
     {
       "id": 3,
@@ -31,7 +31,7 @@
         "Que has de reduir la velocitat"
       ],
       "resposta_correcta": 0,
-      "imatge": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Traffic_light_green.png"
+      "imatge": "../img/3.png"
     },
     {
       "id": 4,
@@ -42,7 +42,7 @@
         "Accelerar per passar abans"
       ],
       "resposta_correcta": 0,
-      "imatge": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Spain_traffic_signal_P-20a.svg"
+      "imatge": "../img/4.svg"
     },
     {
       "id": 5,
@@ -53,7 +53,7 @@
         "Prohibit girar a la dreta"
       ],
       "resposta_correcta": 1,
-      "imatge": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Spain_traffic_signal_r400a.svg"
+      "imatge": "../img/5.svg"
     },
     {
       "id": 6,
@@ -64,7 +64,7 @@
         "Avançar un altre vehicle"
       ],
       "resposta_correcta": 2,
-      "imatge": "https://upload.wikimedia.org/wikipedia/commons/8/87/Spain_traffic_signal_r305.svg"
+      "imatge": "../img/6.svg"
     },
     {
       "id": 7,
@@ -75,7 +75,7 @@
         "Prohibit l’accés a camions"
       ],
       "resposta_correcta": 2,
-      "imatge": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Spain_traffic_signal_r105.svg"
+      "imatge": "../img/7.svg"
     },
     {
       "id": 8,
@@ -86,7 +86,7 @@
         "Recomanació de circular a 50 km/h"
       ],
       "resposta_correcta": 0,
-      "imatge": "https://upload.wikimedia.org/wikipedia/commons/4/48/Spain_traffic_signal_r301-50.svg"
+      "imatge": "../img/8.svg"
     },
     {
       "id": 9,
@@ -97,7 +97,7 @@
         "Zona escolar"
       ],
       "resposta_correcta": 0,
-      "imatge": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Spain_traffic_signal_r307.svg"
+      "imatge": "../img/9.svg"
     },
     {
       "id": 10,
@@ -108,7 +108,7 @@
         "Perill de rotonda"
       ],
       "resposta_correcta": 0,
-      "imatge": "https://upload.wikimedia.org/wikipedia/commons/1/10/Spain_traffic_signal_p13a.svg"
+      "imatge": "../img/10.svg"
     }
   ]
 }
