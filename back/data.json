@@ -1,0 +1,114 @@
+{
+  "preguntes": [
+    {
+      "id": 1,
+      "pregunta": "Què indica aquest senyal?",
+      "respostes": [
+        "Prohibit estacionar",
+        "Prohibit avançar",
+        "Prohibit girar a l’esquerra"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://upload.wikimedia.org/wikipedia/commons/0/01/Spain_traffic_signal_r308.svg"
+    },
+    {
+      "id": 2,
+      "pregunta": "Què significa aquest senyal triangular?",
+      "respostes": [
+        "Perill de pas d’animals",
+        "Perill de pas de vianants",
+        "Perill de corba perillosa"
+      ],
+      "resposta_correcta": 1,
+      "imatge": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Spain_traffic_signal_p21.svg"
+    },
+    {
+      "id": 3,
+      "pregunta": "Què indica aquest semàfor amb llum verda?",
+      "respostes": [
+        "Que pots continuar la marxa",
+        "Que has de parar obligatòriament",
+        "Que has de reduir la velocitat"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Traffic_light_green.png"
+    },
+    {
+      "id": 4,
+      "pregunta": "Què has de fer davant aquest pas de vianants?",
+      "respostes": [
+        "Cedir el pas als vianants",
+        "Tocar el clàxon",
+        "Accelerar per passar abans"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Spain_traffic_signal_P-20a.svg"
+    },
+    {
+      "id": 5,
+      "pregunta": "Què significa aquest senyal rodó blau?",
+      "respostes": [
+        "Final d’obligació",
+        "Direcció obligatòria cap a la dreta",
+        "Prohibit girar a la dreta"
+      ],
+      "resposta_correcta": 1,
+      "imatge": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Spain_traffic_signal_r400a.svg"
+    },
+    {
+      "id": 6,
+      "pregunta": "Quina acció està prohibida amb aquest senyal?",
+      "respostes": [
+        "Circular sense casc",
+        "Fer marxa enrere",
+        "Avançar un altre vehicle"
+      ],
+      "resposta_correcta": 2,
+      "imatge": "https://upload.wikimedia.org/wikipedia/commons/8/87/Spain_traffic_signal_r305.svg"
+    },
+    {
+      "id": 7,
+      "pregunta": "Què significa aquest senyal amb un camió?",
+      "respostes": [
+        "Zona de càrrega i descàrrega",
+        "Carretera per a vehicles pesants",
+        "Prohibit l’accés a camions"
+      ],
+      "resposta_correcta": 2,
+      "imatge": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Spain_traffic_signal_r105.svg"
+    },
+    {
+      "id": 8,
+      "pregunta": "Què indica aquest senyal de limitació de velocitat?",
+      "respostes": [
+        "Velocitat màxima 50 km/h",
+        "Velocitat mínima 50 km/h",
+        "Recomanació de circular a 50 km/h"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://upload.wikimedia.org/wikipedia/commons/4/48/Spain_traffic_signal_r301-50.svg"
+    },
+    {
+      "id": 9,
+      "pregunta": "Què significa aquest senyal amb una X vermella?",
+      "respostes": [
+        "Prohibit estacionar i parar",
+        "Prohibit avançar",
+        "Zona escolar"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Spain_traffic_signal_r307.svg"
+    },
+    {
+      "id": 10,
+      "pregunta": "Què indica aquest senyal triangular amb una corba?",
+      "respostes": [
+        "Perill de corba a dreta",
+        "Perill de pendent pronunciada",
+        "Perill de rotonda"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://upload.wikimedia.org/wikipedia/commons/1/10/Spain_traffic_signal_p13a.svg"
+    }
+  ]
+}

@@ -164,17 +164,6 @@ function imprimirJuego(data) {
 
   document.getElementById("btnEnviar").addEventListener("click", function () {
     const url = "recollida.php"; // cambia por tu endpoint
-    // 1) Enviar como JSON
-    fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contadorPreguntes: estatDeLaPartida.contadorPreguntes,
-        respostesUsuari: estatDeLaPartida.respostesUsuari
-      })
-    })
-      .then(res => res.text())
-      .then(data => console.log("JSON ->", data));
 
     // 2) Enviar como FormData (simulando formulario multipart)
     let formData = new FormData();
@@ -187,19 +176,6 @@ function imprimirJuego(data) {
     })
       .then(res => res.text())
       .then(data => console.log("FormData ->", data));
-
-    // 3) Enviar como x-www-form-urlencoded
-    let params = new URLSearchParams();
-    params.append("contadorPreguntes", estatDeLaPartida.contadorPreguntes);
-    params.append("respostesUsuari", JSON.stringify(estatDeLaPartida.respostesUsuari));
-
-    fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: params
-    })
-      .then(res => res.text())
-      .then(data => console.log("URLEncoded ->", data));
   })
 
 }
