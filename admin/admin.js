@@ -13,7 +13,7 @@ async function cargarPreguntas() {
     <td>${p.id}</td>
     <td>
       ${p.pregunta}<br>
-      ${p.imatge ? `<img src="../${p.imatge}" alt="señal" style="max-width:80px;">` : ""}
+      ${p.imatge ? `<img src="../img/${p.imatge}" alt="señal" style="max-width:80px;">` : ""}
     </td>
     <td>
       1: ${p.resposta1}<br>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Trànsit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="quiz-container">
+    
+    <!-- Barra de temps -->
+    <progress id="barraTemps" value="30" max="30" style="width:100%; height:20px;"></progress>
+
+    <!-- Contenidor on es pintarà la pregunta actual -->
+    <div id="pregunta"></div>
+    <div id="marcador"></div>
+
+    <!-- Botons de navegació -->
+    <button id="anterior" style="display:none">Anterior</button>
+    <button id="seguent">Següent</button>
+    <button id="finalitza" style="display:none">Finalitza</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
