@@ -1,109 +1,89 @@
-const API = "api.php";
+// Carregar totes les preguntes
+async function carregarPreguntes() {
+  try {
+    const res = await fetch("api.php?action=list");
+    const dades = await res.json();
 
-async function cargarPreguntas() {
-    const res = await fetch(API);
-    const preguntas = await res.json();
-
-    const tbody = document.querySelector("#tabla tbody");
+    const tbody = document.getElementById("llistaPreguntes");
     tbody.innerHTML = "";
 
-    preguntas.forEach(p => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-    <td>${p.id}</td>
-    <td>
-      ${p.pregunta}<br>
-      ${p.imatge ? `<img src="../img/${p.imatge}" alt="señal" style="max-width:80px;">` : ""}
-    </td>
-    <td>
-      1: ${p.resposta1}<br>
-      2: ${p.resposta2}<br>
-      3: ${p.resposta3}
-    </td>
-    <td>${p.respostaCorrecta}</td>
-    <td>
-      <button onclick="abrirEditar(${p.id}, '${p.pregunta}', '${p.resposta1}', '${p.resposta2}', '${p.resposta3}', ${p.respostaCorrecta}, '${p.imatge ?? ""}')">Editar</button>
-      <button onclick="eliminarPregunta(${p.id})">Eliminar</button>
-    </td>
-  `;
-        tbody.appendChild(tr);
+    dades.forEach(p => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${p.id}</td>
+        <td>${p.pregunta}</td>
+        <td>
+          1: ${p.resposta1}<br>
+          2: ${p.resposta2}<br>
+          3: ${p.resposta3}
+        </td>
+        <td>${p.respostaCorrecta}</td>
+        <td>${p.imatge ? `<img src="../img/${p.imatge}" style="max-width:60px">` : ""}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" onclick="editarPregunta(${p.id})">Editar</button>
+          <button class="btn btn-sm btn-danger" onclick="eliminarPregunta(${p.id})">Eliminar</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
     });
+  } catch (err) {
+    console.error("Error carregant preguntes:", err);
+  }
 }
 
-function abrirModal(id) {
-    document.getElementById(id).style.display = "flex";
-}
+// Afegir nova pregunta
+document.getElementById("formAfegir").addEventListener("submit", async e => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
 
-function cerrarModal(id) {
-    document.getElementById(id).style.display = "none";
-}
+  await fetch("api.php?action=add", {
+    method: "POST",
+    body: formData
+  });
 
-document.getElementById("btn-add").addEventListener("click", () => abrirModal("modal-add"));
-
-document.getElementById("form-add").addEventListener("submit", async e => {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.target).entries());
-
-    const res = await fetch(API, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    });
-
-    if ((await res.json()).success) {
-        e.target.reset();
-        cerrarModal("modal-add");
-        cargarPreguntas();
-    }
+  e.target.reset();
+  bootstrap.Modal.getInstance(document.getElementById("modalAfegir")).hide();
+  carregarPreguntes();
 });
 
-function abrirEditar(id, pregunta, r1, r2, r3, correcta, imatge) {
-    const form = document.getElementById("form-edit");
-    form.id.value = id;
-    form.pregunta.value = pregunta;
-    form.r1.value = r1;
-    form.r2.value = r2;
-    form.r3.value = r3;
-    form.correcta.value = correcta;
-    form.imatge.value = imatge;
-    abrirModal("modal-edit");
+// Preparar modal editar
+async function editarPregunta(id) {
+  const res = await fetch("api.php?action=get&id=" + id);
+  const p = await res.json();
+
+  const form = document.getElementById("formEditar");
+  form.id.value = p.id;
+  form.pregunta.value = p.pregunta;
+  form.resposta1.value = p.resposta1;
+  form.resposta2.value = p.resposta2;
+  form.resposta3.value = p.resposta3;
+  form.respostaCorrecta.value = p.respostaCorrecta;
+  form.imatge.value = p.imatge;
+
+  new bootstrap.Modal(document.getElementById("modalEditar")).show();
 }
 
-document.getElementById("form-edit").addEventListener("submit", async e => {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.target).entries());
+// Guardar canvis d'edició
+document.getElementById("formEditar").addEventListener("submit", async e => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
 
-    const res = await fetch(API, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    });
+  await fetch("api.php?action=update", {
+    method: "POST",
+    body: formData
+  });
 
-    if ((await res.json()).success) {
-        e.target.reset();
-        cerrarModal("modal-edit");
-        cargarPreguntas();
-    }
+  bootstrap.Modal.getInstance(document.getElementById("modalEditar")).hide();
+  carregarPreguntes();
 });
 
+// Eliminar pregunta
 async function eliminarPregunta(id) {
-    if (!confirm("¿Eliminar esta pregunta?")) return;
-
-    const res = await fetch(API, {
-        method: "DELETE",
-        body: `id=${id}`,
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
-    });
-
-    if ((await res.json()).success) {
-        cargarPreguntas();
-    }
+  if (confirm("Vols eliminar aquesta pregunta?")) {
+    await fetch("api.php?action=delete&id=" + id);
+    carregarPreguntes();
+  }
 }
 
-window.onclick = function (e) {
-    document.querySelectorAll(".modal").forEach(m => {
-        if (e.target === m) m.style.display = "none";
-    });
-};
-
-cargarPreguntas();
+// Carregar preguntes quan s'inicia la pàgina
+carregarPreguntes();

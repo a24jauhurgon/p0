@@ -104,7 +104,7 @@ function mostrarPregunta() {
 
     cont.innerHTML = `
     <h3>${estatDeLaPartida.preguntaActual + 1}. ${p.pregunta}</h3>
-    ${p.imatge ? `<img src="img/${p.imatge}" alt="imatge" style="max-width:200px"><br>` : ""}
+    ${p.imatge ? `<img src="img/${p.imatge}" alt="imatge" class="pregunta-img"><br>` : ""}
     <label><input type="radio" name="resp" value="1" ${estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] === 1 ? "checked" : ""}> ${p.resposta1 ?? ""}</label><br>
     <label><input type="radio" name="resp" value="2" ${estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] === 2 ? "checked" : ""}> ${p.resposta2 ?? ""}</label><br>
     <label><input type="radio" name="resp" value="3" ${estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] === 3 ? "checked" : ""}> ${p.resposta3 ?? ""}</label>
@@ -207,12 +207,12 @@ function mostrarPantallaFinal(resultat, tempsEsgotat = false) {
     if (!cont) return;
 
     cont.innerHTML = `
-    <div>
-      <h2>${tempsEsgotat ? "Temps finalitzat!" : "Resultat del Quiz"}</h2>
-      <p>Has encertat ${resultat.correctes ?? resultat.punts ?? 0} de ${resultat.total ?? N_PREGUNTES}</p>
-      <button onclick="location.reload()">Torna a començar</button>
-    </div>
-  `;
+  <div class="text-center d-flex flex-column align-items-center gap-2 py-3">
+    <h2>${tempsEsgotat ? "Temps finalitzat!" : "Resultat del Quiz"}</h2>
+    <p>Has encertat ${resultat.correctes ?? resultat.punts ?? 0} de ${resultat.total ?? N_PREGUNTES}</p>
+    <button onclick="location.reload()" class="btn btn-primary">Torna a començar</button>
+  </div>
+`;
 
     const menu = document.getElementById("menu-preguntes");
     if (menu) menu.remove();
@@ -230,7 +230,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             idsPreguntes = preguntes.map(p => p.id);
         }
 
-        // Listeners de navegación
+        // Listeners de navegació
         const btnSeg = document.getElementById("seguent");
         const btnAnt = document.getElementById("anterior");
         const btnFin = document.getElementById("finalitza");
