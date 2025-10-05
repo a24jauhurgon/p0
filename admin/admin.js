@@ -1,89 +1,137 @@
-// Carregar totes les preguntes
+// admin/admin.js
+
+// --- Referencias principales ---
+const tbody = document.querySelector("#taulaPreguntes tbody");
+const modal = document.getElementById("modalPregunta");
+const form = document.getElementById("formulariPregunta");
+const btnAfegir = document.getElementById("btnAfegir");
+const btnTancarModal = document.getElementById("btnTancarModal");
+const btnOrdenar = document.getElementById("btnOrdenar");
+
+let ordreAsc = true; // Orden ascendente por defecto
+
+// --- Cargar preguntas ---
 async function carregarPreguntes() {
   try {
-    const res = await fetch("api.php?action=list");
-    const dades = await res.json();
+    const res = await fetch(`api.php?action=list`);
+    if (!res.ok) throw new Error("Error de connexió amb l'API");
 
-    const tbody = document.getElementById("llistaPreguntes");
+    let dades = await res.json();
+
+    // Ordenar según la dirección seleccionada
+    dades.sort((a, b) => ordreAsc ? a.id - b.id : b.id - a.id);
+
     tbody.innerHTML = "";
 
+    if (!Array.isArray(dades) || dades.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No hi ha preguntes</td></tr>`;
+      return;
+    }
+
     dades.forEach(p => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
         <td>${p.id}</td>
         <td>${p.pregunta}</td>
         <td>
-          1: ${p.resposta1}<br>
-          2: ${p.resposta2}<br>
-          3: ${p.resposta3}
+          ${p.imatge
+            ? `<img src="../img/${p.imatge}" alt="imatge" style="max-height:60px;border-radius:6px;">`
+            : "—"}
+        </td>
+        <td>
+          1️⃣ ${p.resposta1}<br>
+          2️⃣ ${p.resposta2}<br>
+          3️⃣ ${p.resposta3}
         </td>
         <td>${p.respostaCorrecta}</td>
-        <td>${p.imatge ? `<img src="../img/${p.imatge}" style="max-width:60px">` : ""}</td>
         <td>
-          <button class="btn btn-sm btn-warning me-2" onclick="editarPregunta(${p.id})">Editar</button>
-          <button class="btn btn-sm btn-danger" onclick="eliminarPregunta(${p.id})">Eliminar</button>
+          <button class="btn btn-warning btn-sm" onclick="editarPregunta(${p.id})">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="eliminarPregunta(${p.id})">🗑️</button>
         </td>
       `;
-      tbody.appendChild(tr);
+      tbody.appendChild(fila);
     });
   } catch (err) {
-    console.error("Error carregant preguntes:", err);
+    console.error(err);
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error carregant preguntes</td></tr>`;
   }
 }
 
-// Afegir nova pregunta
-document.getElementById("formAfegir").addEventListener("submit", async e => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
+// --- Abrir modal (centrado) ---
+function obrirModal(p = null) {
+  modal.style.display = "flex"; // flexbox centrado
+  document.getElementById("titolModal").textContent = p ? "Editar Pregunta" : "Afegir Pregunta";
 
-  await fetch("api.php?action=add", {
-    method: "POST",
-    body: formData
-  });
+  form.reset();
 
-  e.target.reset();
-  bootstrap.Modal.getInstance(document.getElementById("modalAfegir")).hide();
-  carregarPreguntes();
+  if (p) {
+    form.id.value = p.id;
+    form.pregunta.value = p.pregunta;
+    form.resposta1.value = p.resposta1;
+    form.resposta2.value = p.resposta2;
+    form.resposta3.value = p.resposta3;
+    form.respostaCorrecta.value = p.respostaCorrecta;
+  } else {
+    form.id.value = "";
+  }
+}
+
+// --- Cerrar modal ---
+btnTancarModal.addEventListener("click", () => {
+  modal.style.display = "none";
 });
 
-// Preparar modal editar
+// --- Botón añadir ---
+btnAfegir.addEventListener("click", () => obrirModal());
+
+// --- Enviar formulario (add/update) ---
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const id = formData.get("id");
+  formData.append("action", id ? "update" : "add");
+
+  const res = await fetch("api.php", { method: "POST", body: formData });
+  const resultat = await res.json();
+
+  if (resultat.ok) {
+    modal.style.display = "none";
+    await carregarPreguntes();
+  } else {
+    alert("Error al guardar la pregunta");
+  }
+});
+
+// --- Editar pregunta ---
 async function editarPregunta(id) {
-  const res = await fetch("api.php?action=get&id=" + id);
+  const res = await fetch(`api.php?action=get&id=${id}`);
   const p = await res.json();
-
-  const form = document.getElementById("formEditar");
-  form.id.value = p.id;
-  form.pregunta.value = p.pregunta;
-  form.resposta1.value = p.resposta1;
-  form.resposta2.value = p.resposta2;
-  form.resposta3.value = p.resposta3;
-  form.respostaCorrecta.value = p.respostaCorrecta;
-  form.imatge.value = p.imatge;
-
-  new bootstrap.Modal(document.getElementById("modalEditar")).show();
+  obrirModal(p);
 }
 
-// Guardar canvis d'edició
-document.getElementById("formEditar").addEventListener("submit", async e => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-
-  await fetch("api.php?action=update", {
-    method: "POST",
-    body: formData
-  });
-
-  bootstrap.Modal.getInstance(document.getElementById("modalEditar")).hide();
-  carregarPreguntes();
-});
-
-// Eliminar pregunta
+// --- Eliminar pregunta ---
 async function eliminarPregunta(id) {
-  if (confirm("Vols eliminar aquesta pregunta?")) {
-    await fetch("api.php?action=delete&id=" + id);
-    carregarPreguntes();
+  if (!confirm("Vols eliminar aquesta pregunta?")) return;
+  const formData = new FormData();
+  formData.append("action", "delete");
+  formData.append("id", id);
+
+  const res = await fetch("api.php", { method: "POST", body: formData });
+  const resultat = await res.json();
+
+  if (resultat.ok) {
+    await carregarPreguntes();
+  } else {
+    alert("Error eliminant la pregunta");
   }
 }
 
-// Carregar preguntes quan s'inicia la pàgina
+// --- Ordenar asc/desc ---
+btnOrdenar.addEventListener("click", () => {
+  ordreAsc = !ordreAsc;
+  btnOrdenar.textContent = ordreAsc ? "↑ Ascendent" : "↓ Descendent";
+  carregarPreguntes();
+});
+
+// --- Inicializar ---
 carregarPreguntes();

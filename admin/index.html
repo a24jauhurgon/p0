@@ -2,123 +2,75 @@
 <html lang="ca">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Preguntes</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css">
+  <title>Administració de preguntes</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
-<body class="bg-light">
+<body>
 
-<div class="container py-4">
-  <h1 class="mb-4 text-center">Gestió de Preguntes</h1>
+  <div class="container mt-4">
+    <h1 class="text-center mb-4">Administració de preguntes</h1>
 
-  <!-- Botó per obrir modal d’afegir -->
-  <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalAfegir">Afegir Pregunta</button>
+    <div class="d-flex justify-content-between mb-3">
+      <button id="btnAfegir" class="btn btn-primary">➕ Afegir Pregunta</button>
+      <button id="btnOrdenar" class="btn btn-outline-secondary">↑ Ascendent</button>
+    </div>
 
-  <table class="table table-striped table-bordered">
-    <thead class="table-dark">
-      <tr>
-        <th>ID</th>
-        <th>Pregunta</th>
-        <th>Respostes</th>
-        <th>Correcta</th>
-        <th>Imatge</th>
-        <th>Accions</th>
-      </tr>
-    </thead>
-    <tbody id="llistaPreguntes"></tbody>
-  </table>
-</div>
+    <table class="table table-bordered table-striped" id="taulaPreguntes">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Pregunta</th>
+          <th>Imatge</th>
+          <th>Respostes</th>
+          <th>Correcta</th>
+          <th>Accions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
-<!-- Modal Afegir Pregunta -->
-<div class="modal fade" id="modalAfegir" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form id="formAfegir">
-        <div class="modal-header">
-          <h5 class="modal-title">Afegir Pregunta</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  <!-- Modal -->
+  <div id="modalPregunta" class="modalPersonalitzat">
+    <div class="modalContingut">
+      <div class="modalCap">
+        <h5 id="titolModal">Afegir Pregunta</h5>
+        <button id="btnTancarModal" class="tancar">&times;</button>
+      </div>
+
+      <form id="formulariPregunta" enctype="multipart/form-data">
+        <input type="hidden" id="idPregunta" name="id">
+
+        <div class="mb-3">
+          <label for="pregunta" class="form-label">Pregunta</label>
+          <input type="text" id="pregunta" name="pregunta" class="form-control" required>
         </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label">Pregunta</label>
-            <input type="text" class="form-control" name="pregunta" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Resposta 1</label>
-            <input type="text" class="form-control" name="resposta1" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Resposta 2</label>
-            <input type="text" class="form-control" name="resposta2" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Resposta 3</label>
-            <input type="text" class="form-control" name="resposta3" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Correcta (1-3)</label>
-            <input type="number" class="form-control" name="respostaCorrecta" min="1" max="3" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Imatge (nom fitxer a /img)</label>
-            <input type="text" class="form-control" name="imatge">
-          </div>
+
+        <div class="mb-3">
+          <label class="form-label">Respostes</label>
+          <input type="text" id="resposta1" name="resposta1" class="form-control mb-2" placeholder="Resposta 1" required>
+          <input type="text" id="resposta2" name="resposta2" class="form-control mb-2" placeholder="Resposta 2" required>
+          <input type="text" id="resposta3" name="resposta3" class="form-control mb-2" placeholder="Resposta 3" required>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tancar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+
+        <div class="mb-3">
+          <label for="correcta" class="form-label">Índex resposta correcta (1-3)</label>
+          <input type="number" id="correcta" name="correcta" class="form-control" min="1" max="3" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="imatge" class="form-label">Imatge (opcional)</label>
+          <input type="file" id="imatge" name="imatge" class="form-control">
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-success">Guardar</button>
         </div>
       </form>
     </div>
   </div>
-</div>
 
-<!-- Modal Editar Pregunta -->
-<div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form id="formEditar">
-        <div class="modal-header">
-          <h5 class="modal-title">Editar Pregunta</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="id">
-          <div class="mb-3">
-            <label class="form-label">Pregunta</label>
-            <input type="text" class="form-control" name="pregunta" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Resposta 1</label>
-            <input type="text" class="form-control" name="resposta1" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Resposta 2</label>
-            <input type="text" class="form-control" name="resposta2" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Resposta 3</label>
-            <input type="text" class="form-control" name="resposta3" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Correcta (1-3)</label>
-            <input type="number" class="form-control" name="respostaCorrecta" min="1" max="3" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Imatge (nom fitxer a /img)</label>
-            <input type="text" class="form-control" name="imatge">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tancar</button>
-          <button type="submit" class="btn btn-primary">Guardar canvis</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="admin.js"></script>
+  <script src="admin.js"></script>
 </body>
 </html>

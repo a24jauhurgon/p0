@@ -102,14 +102,27 @@ function mostrarPregunta() {
     const p = preguntes[estatDeLaPartida.preguntaActual];
     if (!p) return;
 
+    // Construcción del contenido de la pregunta
     cont.innerHTML = `
-    <h3>${estatDeLaPartida.preguntaActual + 1}. ${p.pregunta}</h3>
-    ${p.imatge ? `<img src="img/${p.imatge}" alt="imatge" class="pregunta-img"><br>` : ""}
-    <label><input type="radio" name="resp" value="1" ${estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] === 1 ? "checked" : ""}> ${p.resposta1 ?? ""}</label><br>
-    <label><input type="radio" name="resp" value="2" ${estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] === 2 ? "checked" : ""}> ${p.resposta2 ?? ""}</label><br>
-    <label><input type="radio" name="resp" value="3" ${estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] === 3 ? "checked" : ""}> ${p.resposta3 ?? ""}</label>
-  `;
+      <h3>${estatDeLaPartida.preguntaActual + 1}. ${p.pregunta}</h3>
+      ${p.imatge ? `<img src="img/${p.imatge}" alt="imatge" class="img-pregunta"><br>` : ""}
 
+      <div class="opcions">
+        <label class="btn-resposta ${estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] === 1 ? "seleccionada" : ""}">
+          <input type="radio" name="resp" value="1" hidden> ${p.resposta1 ?? ""}
+        </label>
+
+        <label class="btn-resposta ${estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] === 2 ? "seleccionada" : ""}">
+          <input type="radio" name="resp" value="2" hidden> ${p.resposta2 ?? ""}
+        </label>
+
+        <label class="btn-resposta ${estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] === 3 ? "seleccionada" : ""}">
+          <input type="radio" name="resp" value="3" hidden> ${p.resposta3 ?? ""}
+        </label>
+      </div>
+    `;
+
+    // Listener para guardar la respuesta
     document.querySelectorAll('input[name="resp"]').forEach(r => {
         r.addEventListener("change", () => {
             estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] = parseInt(r.value, 10);
@@ -118,6 +131,15 @@ function mostrarPregunta() {
         });
     });
 
+    // Sincronizar estilo visual (botón seleccionado)
+    document.querySelectorAll(".btn-resposta").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".btn-resposta").forEach(b => b.classList.remove("seleccionada"));
+            btn.classList.add("seleccionada");
+        });
+    });
+
+    // Botones de navegación
     const btnAnt = document.getElementById("anterior");
     const btnSeg = document.getElementById("seguent");
     const btnFin = document.getElementById("finalitza");
@@ -126,6 +148,7 @@ function mostrarPregunta() {
     if (btnSeg) btnSeg.style.display = estatDeLaPartida.preguntaActual < (N_PREGUNTES - 1) ? "inline-block" : "none";
     if (btnFin) btnFin.style.display = estatDeLaPartida.preguntaActual === (N_PREGUNTES - 1) ? "inline-block" : "none";
 
+    // Barra de tiempo
     const barra = document.getElementById("barraTemps");
     if (barra) {
         barra.max = TEMPS;

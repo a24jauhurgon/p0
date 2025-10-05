@@ -1,49 +1,178 @@
-/* General */
+/* ===== Estilo general ===== */
 body {
-  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f4f5f7;
+  color: #222;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* evita scroll */
 }
 
-/* Centrar respuestas sin tocar HTML */
+/* ===== Contenedor principal ===== */
+#quiz-container {
+  width: 90%;
+  max-width: 700px;
+  height: calc(100vh - 170px); /* deja espacio para el menú inferior */
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 15px 25px;
+  box-sizing: border-box;
+}
+
+/* ===== Barra de tiempo ===== */
+#barraTemps {
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  margin-bottom: 12px;
+  accent-color: #198754;
+}
+
+/* ===== Pregunta ===== */
 #pregunta {
-  text-align: center;            /* centra títulos/imagen por si acaso */
+  flex-grow: 1;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
 }
 
-#pregunta label {
-  display: inline-flex;          /* convierte el label en contenedor flexible */
-  align-items: center;           /* alinea radio + texto verticalmente */
-  justify-content: center;       /* centra horizontalmente el contenido del label */
-  gap: 8px;                      /* separación entre radio y texto */
-  margin: 8px 0;
+#pregunta h3 {
+  font-size: 1.15rem;
+  margin-bottom: 12px;
 }
 
-#pregunta input[type="radio"] {
-  margin: 0;                     /* evita márgenes raros */
+/* ===== Imagen ===== */
+.img-pregunta {
+  display: block;
+  margin: 0 auto 12px;
+  max-height: 140px;
+  height: 20vh; /* se adapta pero más pequeño */
+  object-fit: contain;
 }
 
-/* Barra de navegació de preguntes */
+/* ===== Botones de respuesta ===== */
+.btn-resposta {
+  display: block;
+  width: 80%;
+  max-width: 450px;
+  margin: 6px auto;
+  padding: 10px;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-resposta:hover {
+  background-color: #f8f8f8;
+}
+
+.btn-resposta.seleccionada {
+  background-color: #ffc107;
+  border-color: #e0a800;
+  color: #fff;
+}
+
+/* ===== Botones de navegación en línea ===== */
+.d-flex.justify-content-between {
+  display: flex;
+  flex-direction: row;       /* Asegura que estén en línea */
+  justify-content: center;   /* Centra todo el grupo */
+  align-items: center;
+  gap: 12px;                 /* Separación entre ellos */
+  margin-top: 10px;
+}
+
+#anterior, #seguent, #finalitza {
+  flex: 0 0 auto;            /* No se estiran ni encogen */
+  min-width: 110px;
+  padding: 6px 0;            /* Más bajos */
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  transition: background-color 0.2s ease-in-out;
+}
+
+#anterior {
+  background-color: #6c757d;
+}
+#anterior:hover {
+  background-color: #5a6268;
+}
+
+#seguent {
+  background-color: #0d6efd;
+}
+#seguent:hover {
+  background-color: #0b5ed7;
+}
+
+#finalitza {
+  background-color: #198754;
+}
+#finalitza:hover {
+  background-color: #157347;
+}
+
+/* === Forzar botones de navegación en línea === */
+#quiz-container .d-flex.justify-content-between {
+  display: flex;
+  flex-direction: row;         /* En línea horizontal */
+  justify-content: center;     /* Centrados */
+  align-items: center;
+  gap: 16px;                   /* Espacio entre ellos */
+  flex-wrap: nowrap;           /* Evita que salten de línea */
+  width: 100%;
+}
+
+#quiz-container .d-flex.justify-content-between button {
+  min-width: 130px;
+  padding: 8px 0;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  flex: 0 0 auto;              /* Mantienen tamaño fijo */
+}
+
+/* ===== Menú inferior fijo ===== */
 #menu-preguntes {
   position: fixed;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  height: 55px;
   background: #f8f9fa;
   border-top: 1px solid #ddd;
-  padding: 10px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: 6px;
   z-index: 1000;
 }
 
 .btn-pregunta {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 6px;
   border: 1px solid #aaa;
-  cursor: pointer;
   background: #fff;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.9rem;
 }
 
 .btn-pregunta.no-contestada {
@@ -52,30 +181,61 @@ body {
 }
 
 .btn-pregunta.contestada {
-  background: #fd7e14; /* anaranjado Bootstrap */
+  background: #fd7e14;
   color: #fff;
 }
 
 .btn-pregunta.actual {
-  outline: none;
-  border: 2px solid #0d6efd; /* azul Bootstrap */
+  border: 2px solid #0d6efd;
 }
 
-/* Imagen pregunta */
-#pregunta img {
-  display: block;
-  margin: 8px auto 12px;
-  max-width: 250px;
+/* ===== Pantalla final ===== */
+#quiz-container > div:last-child {
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-img.pregunta-img {
-  display: block;
-  margin: 10px auto;
-  max-width: 200px;
-  height: 150px;
-  object-fit: contain;
-  border: 1px solid #ddd;
+#quiz-container > div:last-child h2 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+#quiz-container > div:last-child p {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+#quiz-container > div:last-child button {
+  background-color: #0d6efd;
+  color: white;
+  font-size: 1rem;
+  border: none;
   border-radius: 6px;
-  background: #fff;
-  padding: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+#quiz-container > div:last-child button:hover {
+  background-color: #0b5ed7;
+}
+
+.btn-admin {
+  display: inline-block;
+  margin: 20px auto;
+  padding: 10px 18px;
+  background-color: #0d6efd;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
+  text-align: center;
+}
+
+.btn-admin:hover {
+  background-color: #0b5ed7;
 }
