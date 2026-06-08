@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'a24jauhurgon_autoescola';
 $username = 'a24jauhurgon_autoescola';
-$password = 'Jaume12345';
+$password = getenv('DB_PASSWORD') ?: ''; // Evitem pujar contrasenyes a Git (SonarCloud blocker)
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
