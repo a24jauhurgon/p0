@@ -1,0 +1,22 @@
+# Configuració de Netlify per al Quiz Trànsit
+# Nota: El backend PHP no és compatible amb Netlify (Jamstack).
+# Aquest desplegament publica el frontend estàtic per complir el requisit
+# de desplegament continu (RA3 de DIGISOS).
+
+[build]
+  publish = "."
+
+# Redirigim totes les crides al backend PHP a una pàgina d'error estàtica
+# ja que Netlify no pot executar PHP.
+[[redirects]]
+  from = "/*.php"
+  to = "/php-not-supported.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
