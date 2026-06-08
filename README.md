@@ -1,7 +1,7 @@
 # 🚦 Quiz Trànsit — Jaume Hurtado
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=a24jauhurgon_p0&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=a24jauhurgon_p0)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/quiz-transit-p0/deploy-status)](https://quiz-transit-p0.netlify.app)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7eadc3f3-8ead-4bb8-abb9-3df268c83f6f/deploy-status)](https://quiz-transit-p0.netlify.app)
 
 Aplicació web interactiva per practicar preguntes del **carnet de conduir tipus B**.  
 Inclou **temporitzador**, **emmagatzematge local**, **puntuació automàtica** i **panell d’administració complet** per gestionar preguntes i imatges.
