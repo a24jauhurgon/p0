@@ -108,7 +108,7 @@ function ensureMenuContainer () {
  */
 function pintarMenu () {
   const menu = ensureMenuContainer()
-  menu.innerHTML = ''
+  menu.replaceChildren()
 
   for (let i = 0; i < N_PREGUNTES; i++) {
     const btn = document.createElement('button')
@@ -188,7 +188,7 @@ function mostrarPregunta () {
   })
 
   wrapper.appendChild(opcions)
-  cont.innerHTML = ''
+  cont.replaceChildren()
   cont.appendChild(wrapper)
 
   // Assigna events als inputs de ràdio
@@ -350,7 +350,7 @@ function mostrarPantallaFinal (resultat, tempsEsgotat = false) {
   wrapper.appendChild(info)
   wrapper.appendChild(btnRestart)
 
-  cont.innerHTML = ''
+  cont.replaceChildren()
   cont.appendChild(wrapper)
 
   const menu = document.getElementById('menu-preguntes')

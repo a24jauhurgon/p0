@@ -34,10 +34,16 @@ async function carregarPreguntes () {
     // Ordenació local per ID segons la preferència de l'usuari
     dades.sort((a, b) => ordreAsc ? a.id - b.id : b.id - a.id)
 
-    tbody.innerHTML = ''
+    tbody.replaceChildren()
 
     if (!Array.isArray(dades) || dades.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No hi ha preguntes</td></tr>'
+      const trEmpty = document.createElement('tr')
+      const tdEmpty = document.createElement('td')
+      tdEmpty.colSpan = 6
+      tdEmpty.className = 'text-center text-muted'
+      tdEmpty.textContent = 'No hi ha preguntes'
+      trEmpty.appendChild(tdEmpty)
+      tbody.appendChild(trEmpty)
       return
     }
 
@@ -64,7 +70,15 @@ async function carregarPreguntes () {
       }
 
       const tdRespostes = document.createElement('td')
-      tdRespostes.innerHTML = `1️⃣ ${p.resposta1}<br>2️⃣ ${p.resposta2}<br>3️⃣ ${p.resposta3}`
+      const r1 = document.createTextNode(`1️⃣ ${p.resposta1}`)
+      const r2 = document.createTextNode(`2️⃣ ${p.resposta2}`)
+      const r3 = document.createTextNode(`3️⃣ ${p.resposta3}`)
+      
+      tdRespostes.appendChild(r1)
+      tdRespostes.appendChild(document.createElement('br'))
+      tdRespostes.appendChild(r2)
+      tdRespostes.appendChild(document.createElement('br'))
+      tdRespostes.appendChild(r3)
 
       const tdCorrecta = document.createElement('td')
       tdCorrecta.textContent = p.respostaCorrecta
@@ -89,7 +103,14 @@ async function carregarPreguntes () {
     })
   } catch (err) {
     console.error('Error carregant preguntes:', err)
-    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-danger">Error carregant preguntes</td></tr>'
+    tbody.replaceChildren()
+    const trErr = document.createElement('tr')
+    const tdErr = document.createElement('td')
+    tdErr.colSpan = 6
+    tdErr.className = 'text-center text-danger'
+    tdErr.textContent = 'Error carregant preguntes'
+    trErr.appendChild(tdErr)
+    tbody.appendChild(trErr)
   }
 }
 
