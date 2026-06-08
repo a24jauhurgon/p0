@@ -1,5 +1,8 @@
 # 🚦 Quiz Trànsit — Jaume Hurtado
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=a24jauhurgon_p0&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=a24jauhurgon_p0)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/placeholder/deploy-status)](https://app.netlify.com)
+
 Aplicació web interactiva per practicar preguntes del **carnet de conduir tipus B**.  
 Inclou **temporitzador**, **emmagatzematge local**, **puntuació automàtica** i **panell d’administració complet** per gestionar preguntes i imatges.
 
@@ -152,6 +155,21 @@ p0/
 | 6 | Interfície responsive | ✅ |
 | 7 | Reinici i navegació per preguntes | ✅ |
 | 8 | Documentació i netedat del codi | ✅ |
+
+---
+
+## 🌍 Responsabilitat Social i Alineació amb els ODS
+
+> **Alineació Estratègica amb els Objectius de Desenvolupament Sostenible (ODS) de l'ONU:**
+>
+> El **Quiz Trànsit** està directament vinculat a l'**ODS 3 (Salut i Benestar)**, focalitzant-se en l'**Objectiu 3.6**: *"Reduir a la meitat el nombre de morts i lesions causades per accidents de trànsit al món"*. L'aplicació educa als futurs conductors sobre les normes de seguretat viària, fomentant vies de circulació responsables i conscients.
+>
+> A més, incideix en l'**ODS 11.2** (*Transport sostenible i segur*), proporcionant accés obert i gratuït a formació per al transport segur, sense barreres geogràfiques ni econòmiques.
+
+| ODS | Objectiu específic | Com hi contribueix |
+|-----|-------------------|-------------------|
+| 🟢 ODS 3 — Salut i Benestar | 3.6: Reduir morts per accidents de trànsit | Formació interactiva de normes vials |
+| 🟠 ODS 11 — Ciutats sostenibles | 11.2: Accés a transport segur | Formació oberta i accessible a tothom |
 
 ---
 
